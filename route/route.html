@@ -1,0 +1,32 @@
+
+<h1>Basic Routing</h1>
+
+Route::match(['get', 'post'], '/', function () {
+    //
+});
+
+<!-- Liet ke HTTP thich hop voi route -->
+
+Route::any('/', function () {
+    //
+});
+
+
+<!-- Route Phu hop vs bat ky HTTP nao` -->
+
+@csrf
+
+<!-- Voi Post Put Delete thi bi chan Csrf -->
+
+
+<h1>Redirect Routes</h1>
+
+
+Route::redirect('/here', '/there', 301);
+<!-- Mac dinh la 302  , chuyen huong tam thoi-->
+
+Route::permanentRedirect('/here', '/there');
+<!-- mac dinh la 301  , chuyen huong vinh vien -->
+
+
+<h1>View Routes</h1>
