@@ -1,0 +1,31 @@
+<h1>Tao Controller day du  (Resource controller)</h1>
+php artisan make:controller PostController --resource
+
+<!-- Tao day du cac method -->
+dk Route : Route::resource('posts', 'PostController');
+
+
+
+
+<h1>Tao Controller day du  (Resource controller) dong thoi tao MODEL</h1>
+
+php artisan make:controller PhotoController --resource --model=Photo
+
+
+
+<h1>Partial resource routes</h1>
+
+
+Voi tu khoa except  va only se lay cac route can thoi 
+
+Route::resource('posts', 'PostController')->only([
+    'index', 'show'
+]);    -> chi lay cac route can thiet (index  va2 show)
+
+// Đăng ký tất cả các resource route trong PhotoController ngoại trừ destroy
+Route::resource('photos', 'PhotoController')->except([
+    'destroy'
+]);   ->  loai bo deytroy 
+
+
+<h1></h1>
