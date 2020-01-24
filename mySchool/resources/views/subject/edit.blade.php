@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <form class="m-5 w-75" method="POST" action="/edit/subject/{{$subject->id}}">
+    <form class="m-5 w-75" method="POST" action="{{$subject->id}}">
         @csrf
         <div class="form-group">
             <label for="name">Name Of The Subject</label>

@@ -19,12 +19,11 @@
                     @csrf
                     <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search : enter id of subject"
                            aria-label="Search" name="search" id="searchInput">
-                    <input class="btn btn-success" type="submit" value="Search" id="submit" >
                 </form>
             </th>
             <th scope="col">
                 <button  type="button" class="btn btn-primary">
-                    <a class="text-white text-decoration-none" href="/create/subject"> New </a>
+                    <a class="text-white text-decoration-none" href="subject/create"> New </a>
                 </button>
             </th>
         </tr>
@@ -40,10 +39,10 @@
                 <td>{{$subject->credit}}</td>
                 <td>
                     <button  type="button" class="btn btn-warning ">
-                        <a href="/edit/subject/{{$subject->id}}" class="text-decoration-none text-white"> Edit </a>
+                        <a href="subject/edit/{{$subject->id}}" class="text-decoration-none text-white"> Edit </a>
                     </button>
                     <button  type="button" class="btn btn-danger">
-                        <a href="/remove/subject/{{ $subject->id}}" class="text-decoration-none text-white"> Delete </a>
+                        <a href="subject/remove/{{ $subject->id}}" class="text-decoration-none text-white"> Delete </a>
                     </button>
                 </td>
                 <td></td>
@@ -80,18 +79,17 @@
                     }
                 });
                 event.preventDefault();
-                var searchString = $("#searchInput").val();
+                var searchInput = $("#searchInput").val();
                 $.ajax({
-                    url: '/search/subject',
+                    url: 'subject/search',
                     type: 'POST',
-                    data: {searchString: searchString},
+                    data: {searchInput: searchInput},
                     dataType: 'JSON',
                     success: function(result){
-                        $('tbody')
-                            .empty()
-                            .append(' <tr>  <td>'+result.id+'</td> <td>'+result.name+'</td>  <td>'+result.id+'</td> <td>'+result.credit+'</td> <td> <button type="button" class="btn btn-warning "> <a href="/edit/subject/'+result.id+'" class="text-decoration-none text-white"> Edit </a> </button> <button  type="button" class="btn btn-danger"> <a href="/remove/subject/'+result.id+'" class="text-decoration-none text-white"> Delete </a> </button> </td> <td></td> <td></td></tr>');
+                        console.log(result.searchOutput);
+                        $('tbody').empty().append(result.searchOutput);
                     },
-                    error: function(data) {
+                    error: function() {
                         $('tbody')
                             .empty()
                             .append('<h1>  Can not Find  </h1>');
