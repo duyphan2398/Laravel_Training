@@ -9,96 +9,113 @@ use Illuminate\Http\Request;
 class SubjectController extends Controller
 {
     public function index(){
-        $subjects = Subject::all()->sortBy('id',1,true);
+        $subjects = Subject::orderBy('id','desc')->get();
         return view('subject.subject',compact('subjects'));
     }
-
-    public function  apiIndex(){
-        $subjects = Subject::all()->sortBy('id',1,true);
-        return response()->json($subjects);
-    }
-
-    public function  remove(Subject $subject){
+    public function  destroy(Subject $subject){
         if ($subject->delete()) {
-            return redirect()->back()->with("alert", "Deleted");
-        }
-        return redirect()->back()->with("alert", "Can not Delete");
-    }
-
-    public function create(){
-        $teachers = Teacher::all();
-        return view('subject.create')->with('teachers', $teachers);
-    }
-
-    public function store(Request $request){
-       
-        $request->validate([
-            'name' => 'bail|required',
-            'credit' => 'required|integer'
-        ]);
-
-        $subject = new Subject();
-        $subject->name = request()->name;
-        $subject->credit = request()->credit;
-        $subject->id_teacher = request()->id_teacher;
-        if ($subject->save()) {
-            return redirect()->route('index')->with('alert', 'Created');
-        }
-        return redirect()->route('index')->with('alert', 'Can not Create');
-    }
-
-    public function edit(Subject $subject){
-        return view('subject.edit',compact('subject'));
-    }
-
-    public function update(Subject $subject){
-        $subject->name = \request()->name;
-        $subject->credit = \request()->credit;
-        if ($subject->save()) {
-            return redirect()->route('index')->with('alert', 'Updated');
-        }
-        return redirect()->route('index')->with('alert', 'Can Not Update');
-
-    }
-    public function search(Request $request) {
-        $result ='';
-        if ($request->searchInput == null){
-            $subjects = Subject::all()->sortBy('id',1,true);
+            $result = '';
+            $subjects = Subject::orderBy('id','desc')->get();
+            $count = 0;
             foreach ($subjects as $subject) {
                 $result .=
                     '<tr>
-                    <td>'.$subject->id.'</td>
+                    <td>'.++$count.'</td>
                     <td>'.$subject->name.'</td>
                     <td>'.$subject->id.'</td>
                     <td>'.$subject->credit.'</td>
                     <td>
                         <button type="button" class="btn btn-warning ">
-                            <a href="subject/edit/'.$subject->id.'" class="text-decoration-none text-white"> Edit </a>
+                            <a href="'.route('subjects.edit',$subject).'" class="text-decoration-none text-white"> Edit </a>
                         </button>
-                        <button  type="button" class="btn btn-danger">
-                            <a href="subject/remove/'.$subject->id.'" class="text-decoration-none text-white"> Delete </a>
+                        <button type="button" class="btn btn-danger " onclick="destroy_confirm(\''.route('subjects.destroy',$subject).'\')">
+                        Delete
                         </button>
                     </td>
                     <td></td>
                     <td></td>
                 </tr> ';
             }
+            return response()->json([
+                'response' => $result
+            ]);
         }
         else {
+            return response()->json([
+                'msg'=>'Can not Delete',
+            ],422);
+        }
+    }
+    public function create(){
+        $teachers = Teacher::all();
+        return view('subject.create')->with('teachers', $teachers);
+    }
+    public function store(Request $request){
 
+        $request->validate([
+            'name' => 'bail|required',
+            'credit' => 'required|integer'
+        ]);
+
+        if (Subject::create($request->all())) {
+            return redirect()->route('subjects.index')->with('alert', 'Created');
+        }
+        return redirect()->back()->with('alert', 'Can not Create');
+    }
+
+    public function edit(Subject $subject){
+        return view('subject.edit',compact('subject'));
+    }
+
+    public function update(Request $request, Subject $subject){
+        if ($subject->update($request->all())) {
+            $request->session()->flash('status', 'Updated !');
+            return redirect('/subjects');;
+        }
+        $request->session()->flash('status', 'Con not update !');
+        return redirect()->back();
+
+    }
+    public function search(Request $request) {
+        $result ='';
+        $count = 0;
+        if ($request->searchInput == null){
+            $subjects = Subject::orderBy('id','desc')->get();
+
+            foreach ($subjects as $subject) {
+                $result .=
+                    '<tr>
+                     <td>'.++$count.'</td>
+                    <td>'.$subject->name.'</td>
+                    <td>'.$subject->id.'</td>
+                    <td>'.$subject->credit.'</td>
+                    <td>
+                        <button type="button" class="btn btn-warning ">
+                            <a href="'.route('subjects.edit',$subject).'" class="text-decoration-none text-white"> Edit </a>
+                        </button>
+                        <button type="button" class="btn btn-danger " onclick="destroy_confirm(\''.route('subjects.destroy',$subject).'\')">
+                        Delete
+                        </button>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>';
+            }
+        }
+        else {
             $subjects = Subject::find($request->searchInput);
             $result .=
                 '<tr>
-                    <td>'.$subjects->id.'</td>
+                    <td>'.++$count.'</td>
                     <td>'.$subjects->name.'</td>
                     <td>'.$subjects->id.'</td>
                     <td>'.$subjects->credit.'</td>
                     <td>
-                        <button type="button" class="btn btn-warning ">
-                            <a href="subject/edit/'.$subjects->id.'" class="text-decoration-none text-white"> Edit </a>
+                         <button type="button" class="btn btn-warning ">
+                            <a href="'.route('subjects.edit',$subjects).'" class="text-decoration-none text-white"> Edit </a>
                         </button>
-                        <button  type="button" class="btn btn-danger">
-                            <a href="subject/remove/'.$subjects->id.'" class="text-decoration-none text-white"> Delete </a>
+                        <button type="button" class="btn btn-danger " onclick="destroy_confirm(\''.route('subjects.destroy',$subjects).'\')">
+                        Delete
                         </button>
                     </td>
                     <td></td>
@@ -106,8 +123,6 @@ class SubjectController extends Controller
                 </tr> ';
 
         }
-
-
         if ($subjects) {
             return response()->json([
                 'searchSubjects'=>$subjects,
@@ -121,13 +136,6 @@ class SubjectController extends Controller
             ], 422);
         }
     }
-
-
-    public function detail($id){
-        $subject = Subject::find($id);
-        dd($subject);
-    }
 }
-// Middle Where Cho URL
-//
+
 

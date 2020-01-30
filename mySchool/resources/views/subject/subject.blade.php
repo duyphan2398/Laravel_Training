@@ -23,7 +23,7 @@
             </th>
             <th scope="col">
                 <button  type="button" class="btn btn-primary">
-                    <a class="text-white text-decoration-none" href="subject/create"> New </a>
+                    <a class="text-white text-decoration-none" href="{{route('subjects.create')}}"> New </a>
                 </button>
             </th>
         </tr>
@@ -39,22 +39,16 @@
                 <td>{{$subject->credit}}</td>
                 <td>
                     <button  type="button" class="btn btn-warning ">
-                        <a href="subject/edit/{{$subject->id}}" class="text-decoration-none text-white"> Edit </a>
+                        <a href="{{route('subjects.edit',$subject)}}" class="Edit" class="text-decoration-none text-white"> Edit </a>
                     </button>
-                    <button  type="button" class="btn btn-danger">
-                        <a href="subject/remove/{{ $subject->id}}" class="text-decoration-none text-white"> Delete </a>
+                    <button type="button" class="btn btn-danger " onclick="destroy_confirm('{{route('subjects.destroy',$subject)}}')">
+                        Delete
                     </button>
                 </td>
                 <td></td>
                 <td></td>
             </tr>
-
-
-
         @endforeach
-
-
-
         </tbody>
 
 
@@ -62,16 +56,38 @@
 
 
     <script !src="">
-        var msg = '{{Session::get('alert')}}';
-        var exist = '{{Session::has('alert')}}';
-        console.log(msg);
-        console.log(exist);
-        if (exist){
-            alert(msg);
+
+        function destroy_confirm(Url) {
+            if (confirm("Do you sure ?"))
+                destroy_subject(Url);
+        }
+        function destroy_subject(Url){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            event.preventDefault();
+            $.ajax({
+                url: Url,
+                type: 'DELETE',
+                success: function(result){
+                    $('tbody').empty().append(result.response);
+                    console.log(result);
+                },
+                error: function(data) {
+                    alert("Can not Delete");
+                    console.log(data.msg);
+                }
+
+            })
         }
 
-
+        function  search_subject() {
+            console.log('hello');
+        }
         $(document).ready(function () {
+
             $('#searchInput').keyup(function(){
                 $.ajaxSetup({
                     headers: {
@@ -81,7 +97,7 @@
                 event.preventDefault();
                 var searchInput = $("#searchInput").val();
                 $.ajax({
-                    url: 'subject/search',
+                    url: 'subjects/search',
                     type: 'POST',
                     data: {searchInput: searchInput},
                     dataType: 'JSON',
