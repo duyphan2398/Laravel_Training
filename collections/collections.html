@@ -1,0 +1,97 @@
+<h1>contains($key, $operator = null, $value = null)</h1>
+kiem tra su ton tai cua 1 collect
+
+$users->contains(1);
+
+$users->contains(User::find(1));
+
+<h1>Kiem tra su khac nhau giua 2 collect</h1>
+diff
+$users = $users->diff(User::whereIn('id', [1, 2, 3])->get());
+
+<h1> ngoai tru , nhan vao primary key </h1>
+$users = $users->except([1, 2, 3]);
+
+<> only  
+
+<h1>find  , tim theo primary key </h1>
+
+$users = User::all();
+
+$user = $users->find(1);
+
+
+<h1>update lai collect hien tai </h1>
+$users = $users->fresh();
+
+$users = $users->fresh('comments');\
+
+
+<h1>Phan giao giua 2 collections </h1>
+intersect($items)
+
+
+<h1>Tra ve cac collect la duy nhat </h1>
+$users = $users->unique();
+
+<h1>chunk</h1>
+
+Chia cac collect thanh tung cum de thuc hien 
+<br>
+  @foreach ($products->chunk(3) as $chunk)
+        <div class="row">
+            @foreach ($chunk as $product)
+                <div class="col-xs-4">{{ $product->name }}</div>
+            @endforeach
+        </div>
+    @endforeach
+
+
+ <br>
+
+
+ <h1>collapse()  bien 1 collect co nhieu mang thanh 1 mang </h1>
+ <br>
+
+  $collection = collect([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
+
+    $collapsed = $collection->collapse();
+
+    $collapsed->all();
+
+    // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    <br>
+
+
+
+<h1>filter loc cac phan tu theo 1 dk </h1>
+<br>
+   $collection = collect([1, 2, 3, 4]);
+
+    $filtered = $collection->filter(function ($value, $key) {
+        return $value > 2;
+    });
+
+    $filtered->all();
+
+    // [3, 4]
+
+
+
+<br>
+
+<h1>first() cung co the thuc hien nhu filter()</h1>
+<br>
+<h1>groupBy() gom nhom theo dieu kien</h1>
+
+<br>
+<h1>has() kiem tra item co ton tai ko </h1>
+
+$collection = collect(['account_id' => 1, 'product' => 'Desk']);
+$collection->has('email');
+// false
+
+
+<h1>isEmpty() check rong </h1>
+
