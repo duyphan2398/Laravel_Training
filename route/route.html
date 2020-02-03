@@ -1,0 +1,74 @@
+
+<h1>Basic Routing</h1>
+
+Route::match(['get', 'post'], '/', function () {
+    //
+});
+
+<!-- Liet ke HTTP thich hop voi route -->
+
+Route::any('/', function () {
+    //
+});
+
+
+<!-- Route Phu hop vs bat ky HTTP nao` -->
+
+@csrf
+
+<!-- Voi Post Put Delete thi bi chan Csrf -->
+
+
+<h1>Redirect Routes</h1>
+
+
+Route::redirect('/here', '/there', 301);
+<!-- Mac dinh la 302  , chuyen huong tam thoi-->
+
+Route::permanentRedirect('/here', '/there');
+<!-- mac dinh la 301  , chuyen huong vinh vien -->
+
+
+<h1>Optional Parameters</h1>
+
+
+Route::get('user/{name?}', function ($name = 'John') {
+    return $name;
+});
+
+<!-- Neu khong co thi se bang gia tri mac dinh -->
+
+
+<h1>Encoded forward Slashes</h1>
+
+Route::get('search/{search}', function ($search) {
+    return $search;
+})->where('search', '.*');
+
+
+<h1>Regular expression constraint</h1>
+
+Route::get('user/{name}/post/{id}', function($name, $id) {
+    //
+})->where(['name' => '[A-Za-z]+', 'id' => '[0-9]+']);
+
+
+
+<h1>Route group </h1>
+
+<!-- Gôm 1 nhóm các group có chung tiền tố, chia sẽ middleware namespace ,..  -->
+
+Route::group(['prefix'=>'subject'], function (){
+    Route::get('','SubjectController@index')->name('index');
+    Route::get('/remove/{subject}','SubjectController@remove');
+    Route::get('/create','SubjectController@create');
+    Route::post('/create','SubjectController@store');
+    Route::get('/edit/{subject}','SubjectController@edit');
+    Route::post('/edit/{subject}','SubjectController@update');
+    Route::post('/search','SubjectController@search');
+});
+
+
+<!-- Tat ca cac route bat dau bang tu khoa subject -->
+
+throttle  <!-- Middleware chong DDos, 'throttle:5,1'  <- 5 lan 1 phut -->
