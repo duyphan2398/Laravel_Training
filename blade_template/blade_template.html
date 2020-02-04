@@ -1,0 +1,88 @@
+<h1>for </h1>
+
+Khi foreach se  co bien $loop 
+$loop->index	The index of the current loop iteration (starts at 0).
+
+$loop->iteration	The current loop iteration (starts at 1).
+
+$loop->remaining	The iterations remaining in the loop.
+
+$loop->count	The total number of items in the array being iterated.
+
+$loop->first	Whether this is the first iteration through the loop.
+
+$loop->last	Whether this is the last iteration through the loop.
+
+$loop->even	Whether this is an even iteration through the loop.
+
+$loop->odd	Whether this is an odd iteration through the loop.
+
+$loop->depth	The nesting level of the current loop.
+
+$loop->parent	When in a nested loop, the parent's loop variable.
+
+
+
+<h1> ke thua </h1><br>
+trong layout : ta su dung 
+
+@section('footerScripts')
+		<p>Noi dung lop cha </p>
+@show
+
+
+trong view ke thua layout (moi layout chi extends 1 layout cha )
+
+@section('footerScripts')
+	@parent
+	<script src='dashboard.js'></script>
+@endsection
+
+
+
+view con goi section cua layout cha, neu muon su dung noi dung cua lop cha thi them tu khoa @parent
+
+
+
+<h1> include </h1>
+
+
+<h1>
+	Share view 
+</h1>
+<br>
+cach 1: viet trong Provider/AppServiceProvider.php
+public function boot(){
+	view()->share('posts', Post::recent());
+}
+
+
+<br>
+
+cach 2 : share cho cac partials cu the 
+
+view()->composer([
+'partials.sidebar',
+'partials.footer',
+'partials.header',
+], function($view){
+	$view->with('posts, Post::recent());
+});
+
+
+
+cach 3 :  .... chua hieu lam Class based (ViewComposer class)
+
+
+
+
+<h1>
+	Blade Directives
+</h1>
+<br>
+//AppServiceProvider
+public function boot(){
+	Blade::directive('ifLoggedIn', function(){
+		return "<?php if (auth()->check()): ?>";
+	});
+}
