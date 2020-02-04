@@ -1,0 +1,24 @@
+<h1>$request()->all </h1>
+<br>
+<h1>if ($request->hasAny(['name', 'email'])) {
+    //
+}
+
+Kiem tra co bien do khong 
+</h1>
+
+<h1>KIem tra co bien va khong null </h1>
+if ($request->filled('name')) {
+    //
+}
+
+<h1> 
+	kiem tra bien khong co trong request 
+</h1>
+
+if ($request->missing('name')) {
+    //
+}
+
+
+<!-- Thuc hanh them phan cokie, file trong request :( doc khong hieu duoc  -->
