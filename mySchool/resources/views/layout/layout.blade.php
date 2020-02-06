@@ -12,7 +12,22 @@
     <title>@yield('title')</title>
 </head>
 <body>
-    @yield('content')
+
+
+    @if( Session::has('status'))
+    <div style="z-index: 2; position:relative;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{Session::get('status')}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    @endif
+
+    <div style="z-index: 0">
+        @yield('content')
+    </div>
+
 
     <footer class="text-center">
         <hr class="bg-dark mt-5">
