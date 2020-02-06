@@ -13,6 +13,7 @@
 </head>
 <body>
 
+
     @if( Session::has('status'))
     <div style="z-index: 2; position:relative;" class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{Session::get('status')}}</strong>
@@ -27,10 +28,10 @@
         @yield('content')
     </div>
 
+
     <footer class="text-center">
         <hr class="bg-dark mt-5">
         <h1>THIS IS MY FOOTER</h1>
     </footer>
-
 </body>
 </html>
