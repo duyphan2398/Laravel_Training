@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Subject;
 use App\Teacher;
+use App\Transformers\SubjectTransformer;
 use Illuminate\Http\Request;
-
 class SubjectController extends Controller
 {
+    public function getSubjects(){
+
+//        return  (new SubjectTransformer())->transform(Subject::all());
+        return responder()->success(Subject::all(), new SubjectTransformer())->respond(201);
+    }
     public function index(){
         $subjects = Subject::orderBy('id','desc')->get();
         return view('subject.subject',compact('subjects'));

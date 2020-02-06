@@ -12,6 +12,7 @@
     <title>@yield('title')</title>
 </head>
 <body>
+
     @if( Session::has('status'))
     <div style="z-index: 2; position:relative;" class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{Session::get('status')}}</strong>

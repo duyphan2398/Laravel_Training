@@ -3,11 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class Subject extends Model
 {
+    use SoftDeletes;
+    protected $dates = ['deleted_add'];
+
     public function student(){
         return $this->belongsToMany('App\Student','students_subjects');
     }
@@ -17,6 +21,11 @@ class Subject extends Model
     protected $fillable = [
         'name',
         'credit',
-        'id_teacher'
+        'id_teacher',
+        'deleted_at'
+    ];
+    protected $hidden = [
+        "created_at",
+        "updated_at"
     ];
 }

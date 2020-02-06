@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 Route::resource('subjects', 'SubjectController');
 Route::post('subjects/search','SubjectController@search');
+Route::get('get/api','SubjectController@getSubjects');
 
 
 
