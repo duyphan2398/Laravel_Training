@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
+    <style>
 
+    </style>
     <table class="table table-striped table-dark">
         <thead>
         <tr>
@@ -50,9 +52,9 @@
             </tr>
         @endforeach
         </tbody>
-
-
     </table>
+
+    {{ $subjects->links() }}
 
 
     <script !src="">

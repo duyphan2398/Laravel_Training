@@ -17,16 +17,11 @@ Route::get('/', function () {
 
 
 Route::resource('subjects', 'SubjectController');
+Route::resource('teachers', 'TeacherController');
 Route::post('subjects/search','SubjectController@search');
 Route::get('get/api','SubjectController@getSubjects');
 
 
+Auth::routes();
 
-
-
-
-
-
-
-
-
+Route::get('/home', 'HomeController@index')->name('home');
