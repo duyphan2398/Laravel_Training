@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('checkRole')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teachers = Teacher::orderBy('id','desc')->paginate(15);
+        return view('teacher.teacher')->with('teachers', $teachers);
     }
 
     /**

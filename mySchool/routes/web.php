@@ -21,6 +21,9 @@ Route::resource('teachers', 'TeacherController');
 Route::post('subjects/search','SubjectController@search');
 Route::get('get/api','SubjectController@getSubjects');
 
+Route::get('users/avatar','UserController@createAvatar')->name('getAvatar');
+Route::post('user/avatar',"UserController@storeAvatar")->name('postAvatar');
+/*Route::get('laravel-send-email', 'EmailController@sendEMail');*/
 
 Auth::routes();
 
