@@ -1,3 +1,4 @@
+
 @extends('layouts.layout')
 
 @section('title')
@@ -6,8 +7,10 @@
 
 @section('content')
     <br>
-    Hello I am : {{\Illuminate\Support\Facades\Auth::user()->name}}
+    Hello I am : {{Auth::user()->name}}
     <br>
-    My Id : {{\Illuminate\Support\Facades\Auth::user()->id}}
-
+    My Id : {{ Auth::user()->id}}
+    <br>
+    This is my avatar: <img src="{{Auth::user()->avatar}}" alt="Avatar" class="w-5 h-5" >
+    <br>
 @endsection

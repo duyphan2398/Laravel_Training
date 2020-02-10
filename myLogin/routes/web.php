@@ -13,9 +13,19 @@
 use  Illuminate\Routing\Controller;
 use  App\Http\Controllers\LoginController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    Route::get('/avatar', 'UserController@getUploadAvatar')->name('avatar');
+    Route::post("/avatar", 'UserController@postUploadAvatar');
+
+});
+
+
+
+
 
 Route::get('login', 'LoginController@index')->name('login');
 Route::post('login', 'LoginController@login');
