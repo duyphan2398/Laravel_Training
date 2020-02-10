@@ -27,12 +27,16 @@ class RegisterController extends Controller
 
         $user = User::create($request->all());
         $user->password = Hash::make($user->password);
+        $user->avatar = 'images/default.png';
         if ($user->save()) {
             session()->flash('status', 'TÀI KHOẢN TẠO THÀNH CÔNG');
             return redirect('/login');
         }
         else {
-            return  redirect()->back()->withErrors(['status' => 'KHÔNG THỂ TẠO']);
+            return  redirect()->back()->withErrors([
+                'status' => 'KHÔNG THỂ TẠO'
+            ]);
         }
     }
+
 }
