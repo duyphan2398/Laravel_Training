@@ -15,16 +15,15 @@
         @endforeach
 
     @endif
-    <form class="m-5 w-75" method="POST" action="{{route('subjects.store')}}">
-
+    <form class="m-5 w-75" method="POST" action="">
         @csrf
         <div class="form-group">
             <label for="name">Name Of The Subject</label>
-            <input  name="name" type="text" class="form-control w-50" id="name"  placeholder="Enter Name" required>
+            <input  name="name" type="text" class="form-control w-50" id="name"  placeholder="Enter Name">
         </div>
         <div class="form-group">
             <label for="credit">Number Of Credit</label>
-            <input name="credit" type="text" class="form-control w-50" id="credit" placeholder="Enter Credit" required>
+            <input name="credit" type="text" class="form-control w-50" id="credit" placeholder="Enter Credit">
         </div>
         <div class="form-group w-50">
             <label for="id_teacher" for="credit">Tacher</label>

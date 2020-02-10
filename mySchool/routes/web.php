@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::resource('subjects', 'SubjectController');
 Route::resource('teachers', 'TeacherController');
 Route::post('subjects/search','SubjectController@search');
@@ -27,4 +26,6 @@ Route::post('user/avatar',"UserController@storeAvatar")->name('postAvatar');
 
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+

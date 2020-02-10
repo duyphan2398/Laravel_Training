@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+
 class Subject extends Model
 {
     use SoftDeletes;
@@ -18,6 +19,7 @@ class Subject extends Model
     public function teacher(){
         return $this->belongsTo('App\Teacher','id_teacher','id');
     }
+
     protected $fillable = [
         'name',
         'credit',
@@ -28,4 +30,5 @@ class Subject extends Model
         "created_at",
         "updated_at"
     ];
+
 }

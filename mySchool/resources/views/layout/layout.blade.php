@@ -21,6 +21,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
@@ -69,6 +70,7 @@
         </div>
     </nav>
 @if( Session::has('status'))
+
     <div style="z-index: 2; position:relative;" class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{Session::get('status')}}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -82,10 +84,10 @@
         @yield('content')
     </div>
 
+
     <footer class="text-center">
         <hr class="bg-dark mt-5">
         <h1>THIS IS MY FOOTER</h1>
     </footer>
-
 </body>
 </html>
