@@ -8,13 +8,15 @@ use App\Transformers\SubjectTransformer;
 use Illuminate\Http\Request;
 class SubjectController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('checkRole')->except('index');
+    }
     public function getSubjects(){
-
-//        return  (new SubjectTransformer())->transform(Subject::all());
-        return responder()->success(Subject::all(), new SubjectTransformer())->respond(201);
+        return responder()->success(Subject::all(), new SubjectTransformer())->respond();
     }
     public function index(){
-        $subjects = Subject::all()->sortBy('id',1,true);
+        $subjects = Subject::orderBy('id','desc')->paginate(15);
         return view('subject.subject',compact('subjects'));
     }
 
