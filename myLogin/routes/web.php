@@ -18,9 +18,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('welcome');
     });
-    Route::get('/avatar', 'UserController@getUploadAvatar')->name('avatar');
-    Route::post("/avatar", 'UserController@postUploadAvatar');
-
+    Route::get('avatar', 'UserController@getUploadAvatar')->name('avatar');
+    Route::post("avatar", 'UserController@postUploadAvatar');
 });
 
 
@@ -32,3 +31,5 @@ Route::post('login', 'LoginController@login');
 Route::get('register', 'RegisterController@index')->name('register');
 Route::post('register', 'RegisterController@register');
 Route::get('logout','LoginController@logout')->name('logout');
+Route::get('resetpassword', 'ResetPasswordController@getResetPassword')->name('resetpassword');
+Route::post('resetpassword', 'ResetPasswordController@postResetPassword');
