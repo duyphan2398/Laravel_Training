@@ -25,6 +25,7 @@ class ResetPasswordController extends Controller
         if (!$user){
             return redirect()->back()->withErrors('EMAIL KHÔNG TỒN TẠI');
         }
+        /* làm sao để UnHash mật khẩu và gửi cho user, mà không cần tạo mật khẩu mới */
         $newPassword = Str::random(3);
         $user->password = Hash::make($newPassword);
         if ($user->save())
