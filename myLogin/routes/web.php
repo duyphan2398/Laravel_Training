@@ -20,6 +20,10 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::get('avatar', 'UserController@getUploadAvatar')->name('avatar');
     Route::post("avatar", 'UserController@postUploadAvatar');
+
+    Route::get('export', 'ExcelController@export')->name('export');
+    Route::get('import', 'ExcelController@getImportView');
+    Route::post('import', 'ExcelController@postImportView')->name('import');
 });
 
 
