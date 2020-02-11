@@ -16,8 +16,9 @@
             <br>
             <a href="{{route('avatar')}}">Set Avatar</a>
         @else
-            <a href="{{route('login')}}">Log in</a>
-            <a href="{{route('register')}}">Register</a>
+            <a href="{{route('login')}}">Log in</a> <br>
+            <a href="{{route('register')}}">Register</a> <br>
+            <a href="{{route('resetpassword')}}"> Forget your Password</a> <br>
         @endif
     </nav>
     @yield('content')
